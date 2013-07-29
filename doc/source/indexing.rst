@@ -963,20 +963,27 @@ operator.
 
 .. ipython:: python
 
+   df = DataFrame(rand(n, 3), columns=list('abc'))
    df['bools'] = rand(len(df)) > 0.5
    df['~bools']
+   df['not bools']
+   df['not bools'] == df['~bools']
+   df['not bools'] == df[~df.bools]
 
 Of course, expressions can be arbitrarily complex too
-
 
 .. ipython:: python
 
    # nice short query syntax
-   df['a < b < c and (not bool_column) or bool_column > 2']
+   pretty = df['a < b < c and (not bools) or bools > 2']
 
    # equivalent in pure Python, yuck!
-   df[(df.a < df.b) & (df.b < df.c) & (~df.bool_column) | (df.bool_column > 2)]
+   yuck = df[(df.a < df.b) & (df.b < df.c) & (~df.bools) | (df.bools > 2)]
 
+   pretty
+   yuck
+
+   yuck == pretty
 
 .. _indexing.class:
 
