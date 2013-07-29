@@ -797,6 +797,14 @@ class TestOperations(unittest.TestCase):
         for engine in _engines:
             self.check_nested_period_index_subscript_expression(engine)
 
+    def test_simple_not_expression(self):
+        df = DataFrame(randn(10, 3), columns=list('abc'))
+        df['bools'] = rand(len(df)) > 0.5
+        res = df['not bools']
+        res2 = df['~bools']
+        expec = df[~df.bools]
+        assert_frame_equal(res, expec)
+        assert_frame_equal(res2, expec)
 
 _var_s = randn(10)
 
